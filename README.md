@@ -6,10 +6,10 @@ Ce projet s'inscrit dans une logique de supervision et d’optimisation du parc 
 dans les établissements du groupe Crédit Mutuel Alliance Fédérale, ainsi que leurs partenaires (SG, BNPP, E.Leclerc…).  
 La solution GABEO est utilisée pour piloter ces automates, et ce projet propose une **approche data-driven** pour améliorer :
 
-- La disponibilité des automates
-- La détection des incidents
-- La prévision des maintenances
-- Le pilotage décisionnel par KPIs et visualisations
+- La **disponibilité des automates
+- La **détection** des incidents
+- La **prévision** des maintenances
+- Le **pilotage** décisionnel par KPIs et visualisations**
 
 ---
 
