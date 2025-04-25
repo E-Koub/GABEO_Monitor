@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+.env
+*.ipynb_checkpoints
+rapport_projet.pdf

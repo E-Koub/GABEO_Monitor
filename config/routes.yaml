@@ -1,0 +1,11 @@
+default: home
+routes:
+  home:
+    label: "Home"
+    module: visualization.pages.home.home
+    function: show
+
+  analysis:
+    label: "Analysis"
+    module: visualization.pages.analysis.analysis
+    function: show

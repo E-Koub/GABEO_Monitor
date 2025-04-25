@@ -1,0 +1,11 @@
+id;ville;code_postal;latitude;longitude;status;constructeur;nb_transactions_journalier;date_dernier_incident;nb_incidents_30j
+ATM001;Lille;59800;50.6292;3.0573;OK;NCR;122;;0
+ATM002;Paris;75001;48.8566;2.3522;OK;Diebold;300;;0
+ATM003;Lyon;69000;45.7640;4.8357;Hors Service;Glory;0;2025-04-18;3
+ATM004;Nantes;44000;47.2184;-1.5536;OK;NCR;95;;0
+ATM005;Strasbourg;67000;48.5734;7.7521;Maintenance;Diebold;40;2025-04-20;2
+ATM006;Marseille;13000;43.2965;5.3698;OK;Glory;215;;0
+ATM007;Rennes;35000;48.1173;-1.6778;OK;NCR;110;;0
+ATM008;Toulouse;31000;43.6047;1.4442;Hors Service;Diebold;0;2025-04-15;4
+ATM009;Metz;57000;49.1193;6.1757;OK;Glory;85;;0
+ATM010;Montpellier;34000;43.6108;3.8767;OK;NCR;170;;0

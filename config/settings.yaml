@@ -1,0 +1,12 @@
+project:
+  name: "Data Analysis Project"
+  mode: "dev"
+
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  reports: "reports"
+
+api:
+  base_url: "https://api.exemple.com"
+  timeout: 10
