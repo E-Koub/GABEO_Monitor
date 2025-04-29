@@ -25,7 +25,7 @@ def load_raw_automates_data(data_dir: str = "data/raw", filename: str = "automat
     
     try:
         # Lecture du fichier CSV
-        df = pd.read_csv(file_path)
+        df = pd.read_csv(file_path,sep=";")
         return df
     except pd.errors.ParserError:
         raise ValueError(f"Erreur de formatage dans le fichier : {file_path}")
