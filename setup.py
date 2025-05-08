@@ -14,7 +14,7 @@ setup(
         '': '.'
     },
     python_requires='>=3.8',
-    install_requires=[
+    install_requires = [
         'streamlit>=1.30',
         'pandas>=2.1',
         'numpy>=1.24',
@@ -27,9 +27,11 @@ setup(
         'sqlalchemy>=2.0',
         'pyyaml>=6.0',
         'python-dotenv>=1.0',
-        'pathlib2',
-        'folium',
-        'setuptools',
-        'streamlit-folium>=0.15.0'
+        'pathlib2>=2.3',
+        'setuptools>=65.0',
+        'streamlit-folium>=0.15.0',
+        'panel>=1.3',
+        'scipy>=1.10',
+        'watchfiles>=0.20',
     ],
 )

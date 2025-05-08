@@ -14,7 +14,4 @@ def show(context):  # fonction attendue dans la structure ROUTES
     df = clean_automates_data(df_raw)
 
     st.write("Aperçu des données brutes :", df.head())
-
-
-
-
+    st.markdown("## Main KPIs")
