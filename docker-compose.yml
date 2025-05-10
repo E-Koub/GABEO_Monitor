@@ -43,6 +43,9 @@ services:
     tty: true
     develop:
       <<: *default-develop
+    volumes:
+      - ./data:/app/data
+
     env_file:
       - .env
     depends_on:
