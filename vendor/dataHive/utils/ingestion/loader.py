@@ -3,6 +3,7 @@ import os
 import logging
 import yaml
 
+
 SETTINGS_PATH = os.environ.get('SETTINGS_PATH')
 if SETTINGS_PATH is None:
     raise FileNotFoundError("La variable d'environnement SETTINGS_PATH n'est pas définie")
@@ -47,5 +48,5 @@ def load_csv_file(file_name, sep,folder=RAW_PATH):
 
 def save_file(df, name, folder=PROCESSED_PATH):
     processed_file = os.path.join(folder, f"{name}_clean.csv")
-    df.to_csv(processed_file, index=False)
+    df.to_csv(processed_file, sep=';', index=False)
     logging.info(f"Fichier sauvegardé: {processed_file}")

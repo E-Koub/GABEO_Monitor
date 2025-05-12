@@ -32,6 +32,6 @@ setup(
         'streamlit-folium>=0.15.0',
         'panel>=1.3',
         'scipy>=1.10',
-        'watchfiles>=0.20',
+        'watchfiles>=0.20'
     ],
 )

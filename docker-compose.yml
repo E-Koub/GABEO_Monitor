@@ -62,6 +62,7 @@ services:
       - "8888:8888"
     volumes:
       - ./notebooks:/home/jovyan/work
+      - ./data:/home/jovyan/data
     depends_on:
       db:
         condition: service_healthy

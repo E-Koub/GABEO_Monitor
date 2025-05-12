@@ -1,11 +1,22 @@
-import os
-import sys
+# visualization/pages/analysis.py
 import streamlit as st
-from streamlit_folium import st_folium
+import seaborn as sns
+import matplotlib.pyplot as plt
+import sys
+import os
 
-# Accès aux modules src
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-def show(context=None):
-    st.title("📊 Analyse des Automates")
+from src.automate.analysis.automate_analyzer import AutomateAnalyzer
+
+def show(context):
+    st.title("📊 Analyse Exploratoire des Automates")
+
+    analyzer = AutomateAnalyzer()
+    df = analyzer.get_data()
+
+    # Statistiques descriptives
+    st.header("Statistiques descriptives")
+    st.write(df.describe())
+        
+
 

@@ -1,81 +1,75 @@
+# src/automate/analysis/automate_analyzer.py
+
+import os
 import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
-import folium
-from folium.plugins import MarkerCluster
-from src.automate.preparation.automates_cleaner import clean_automates_data
+import seaborn as sns
+import logging
 
 class AutomateAnalyzer:
-    def __init__(self, df: pd.DataFrame):
-        """
-        Étape 1 : Initialisation avec les données brutes
-        """
-        self.raw_data = df
-        self.cleaned_data = None
+    def __init__(self, data_path=None, report_path=None):
+        self.data_path = data_path or os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../data/processed/automates_prepared.csv'))
+        self.report_path = report_path or os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../reports'))
+        self.df = None
+        logging.basicConfig(level=logging.INFO)
 
-    def preprocess(self):
-        """
-        Étape 2 : Préparation (nettoyage)
-        """
-        self.cleaned_data = clean_automates_data(self.raw_data)
+    def load_data(self):
+        logging.info(f"Chargement des données depuis {self.data_path}")
+        self.df = pd.read_csv(self.data_path, sep=';')
+        return self.df
+    
+    def get_data(self):
+        if self.df is None:
+            return self.load_data()
+        return self.df
 
-    def show_status_distribution(self):
-        """
-        Étape 3 : Visualisation de la répartition des statuts
-        """
-        if self.cleaned_data is None:
-            self.preprocess()
-        sns.countplot(data=self.cleaned_data, x='status')
-        plt.title("Répartition des statuts d'automates")
-        plt.xticks(rotation=45)
+    def analyse_distribution(self):
+        logging.info("Analyse des distributions numériques")
+        print(self.df.describe())
+        print("\nValeurs manquantes :\n", self.df.isnull().sum())
+
+    def analyse_typologie(self):
+        logging.info("Analyse des typologies d'automates")
+        typologie_counts = self.df['Typologie'].value_counts()
+        print(typologie_counts)
+        plt.figure(figsize=(8, 5))
+        sns.countplot(data=self.df, y='Typologie', order=typologie_counts.index)
+        plt.title("Répartition des typologies")
+        self._save_plot("typologie_distribution.png")
+
+    def analyse_score(self):
+        logging.info("Distribution du score de performance")
+        plt.figure(figsize=(10, 5))
+        sns.histplot(self.df['score_performance'], bins=20, kde=True)
+        plt.title("Score de performance")
+        self._save_plot("score_distribution.png")
+
+    def analyse_par_quartier(self):
+        logging.info("Analyse des scores par quartier")
+        stats = self.df.groupby('quartier')['score_performance'].mean().sort_values()
+        print(stats)
+        plt.figure(figsize=(10, 5))
+        stats.plot(kind='barh')
+        plt.title("Score moyen par quartier")
+        self._save_plot("score_par_quartier.png")
+
+    def analyse_hors_service(self):
+        if 'hors_service_Xj' in self.df.columns:
+            count = self.df['hors_service_Xj'].sum()
+            logging.info(f"{count} automates sont hors service depuis plus de X jours")
+
+    def _save_plot(self, filename):
+        output_file = os.path.join(self.report_path, filename)
         plt.tight_layout()
-        plt.show()
+        plt.savefig(output_file)
+        plt.close()
+        logging.info(f"📊 Graphe sauvegardé → {output_file}")
+    
 
-    def map_automates(self):
-        """
-        Étape 4 : Cartographie interactive des automates
-        """
-        if self.cleaned_data is None:
-            self.preprocess()
-
-        if self.cleaned_data.empty:
-            return None
-
-        map_center = [
-            self.cleaned_data.latitude.mean(),
-            self.cleaned_data.longitude.mean()
-        ]
-        m = folium.Map(location=map_center, zoom_start=6)
-        marker_cluster = MarkerCluster().add_to(m)
-
-        for _, row in self.cleaned_data.iterrows():
-            folium.Marker(
-                location=[row.latitude, row.longitude],
-                popup=f"Ville: {row.ville}, Status: {row.status}"
-            ).add_to(marker_cluster)
-
-        return m
-
-    def get_status_counts(self):
-        """
-        Étape 5 : Statistiques simples (par statut)
-        """
-        if self.cleaned_data is None:
-            self.preprocess()
-        return self.cleaned_data['status'].value_counts()
-
-    def avg_transactions_per_constructeur(self):
-        """
-        Étape 6 : Moyenne des transactions par constructeur
-        """
-        if self.cleaned_data is None:
-            self.preprocess()
-        return self.cleaned_data.groupby('constructeur')['nb_transactions_journalier'].mean().sort_values(ascending=False)
-
-    def incidents_summary(self):
-        """
-        Étape 7 : Synthèse des incidents récents (>0 sur 30j)
-        """
-        if self.cleaned_data is None:
-            self.preprocess()
-        return self.cleaned_data[self.cleaned_data['nb_incidents_30j'] > 0]
+    def run_all(self):
+        self.load_data()
+        self.analyse_distribution()
+        self.analyse_typologie()
+        self.analyse_score()
+        self.analyse_par_quartier()
+        self.analyse_hors_service()
